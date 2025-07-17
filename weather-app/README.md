@@ -1,12 +1,18 @@
-# React + Vite
+Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project was part of a group of mini-projects meant to deepen my understanding of React.js concepts.
 
-Currently, two official plugins are available:
+This was the first React.js project that saw me use two external API endpoints to implement the main functionality.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Appreciation:
+- API endpoint for all the cities in the world: [Postman Country API](https://documenter.getpostman.com/view/1134062/T1LJjU52)
+- API endpoint for current weather per city: [Weather API](https://app.swaggerhub.com/apis-docs/WeatherAPI.com/WeatherAPI/1.0.2#/APIs/realtime-weather)
 
-## Expanding the ESLint configuration
+The app allows the user to pick a city from a list of all the cities in the world and returns the following Weather statistics:
+- General weather conditions (e.g: Sunny, Rainy, Cloudy et cetera)
+- Temperature in °C (Degree Celcius)
+- Temperature in °F (Degree Fahrenheit)
+- UV Index
+- Humidity
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Access the deployed app here: https://learning-react-76is99y64-kirks-projects-08dcd899.vercel.app
