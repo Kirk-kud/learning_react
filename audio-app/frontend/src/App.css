@@ -1,0 +1,70 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+body{
+  background-color:cadetblue;
+}
+#github {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+img{
+  width: 2rem;
+  height: 2rem
+}
+h1{
+  margin-top: 0rem;
+}
+label {
+  margin: 0.11rem;
+  font-size: 1rem;
+}
+input{
+  margin: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+}
+#hour-input {
+  border: 0.1rem solid black;
+  width: 4rem;
+}
+#form-div {
+  align-items: center;
+  justify-items: center;
+  margin: 0 auto;
+  text-align: center;
+}
+button {
+  background-color: black;
+  color: white;
+}
+.is-active {
+  background-color: black;
+  color: white;
+}
+.is-inactive {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: black;
+}
+#result-audio {
+  margin:2rem;
+  display:none;
+  border:0.1rem solid black;
+  border-radius:1.5rem;
+  background-color:whitesmoke;
+}
+a {
+  color:rgb(92, 184, 92);
+  font-size:2rem;
+}
+a:hover {
+  color:green;
+}

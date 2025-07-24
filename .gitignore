@@ -34,3 +34,14 @@ pnpm-debug.log*
 coverage/
 *.snap
 .eslintcache
+
+# Virtual environments
+venv/
+
+# Python files
+__pycache__
+pyenv.cfg
+
+# Static files for FastAPI
+static/*
+!static/.gitkeep
