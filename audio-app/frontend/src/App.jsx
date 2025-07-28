@@ -10,7 +10,7 @@ function App() {
   const [ outputFileName, setOutputFileName] = useState(" .mp3");
   const fileLimit = 60000000; // file limit in bytes
 
-  const url = "https://audio-looping-backend.onrender.com"; // "http://127.0.0.1:8080"
+  const url = "https://audio-app-lpej.onrender.com"; // "http://127.0.0.1:8080"
 
    const handleFormSubmit = (e) => {
     e.preventDefault();
