@@ -1,6 +1,7 @@
 import shutil
 import os
 import sys
+
 from http.client import HTTPException
 
 from fastapi import FastAPI, File, UploadFile
@@ -9,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from audio_operations import loop_audio
 from fastapi.responses import FileResponse, StreamingResponse
 from pydub import AudioSegment
+
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
