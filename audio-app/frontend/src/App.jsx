@@ -10,7 +10,7 @@ function App() {
   const [ outputFileName, setOutputFileName] = useState(" .mp3");
   const fileLimit = 60000000; // file limit in bytes
 
-  const url = "http://127.0.0.1:8080"; // "https://audio-app-lpej.onrender.com"
+  const url = "https://audio-app-6cub.onrender.com"; // "http://127.0.0.1:8080"
 
    const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -44,7 +44,6 @@ function App() {
 
     // Changing the button and informing the user that the audio is being looped in the background
     enableLoadingStatus();
-    setLoopedFile('');
 
     // Pausing the audio
     document.querySelector('audio').pause();
@@ -72,6 +71,7 @@ function App() {
       response => response.json()
     ).then(
       data => {
+        console.log(data)
         setLoopedFile(data);
         const source = document.querySelector('source');
 
