@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ToastContainer, toast } from 'react-toastify';
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
@@ -9,15 +8,9 @@ function App() {
   let [ score, setScore ] = useState(0);
   let [ questions, setQuestions ] = useState([]);
   const questionTime = 5000;
-  // const trueInputRef = useRef(null);
-  // const falseInputRef = useRef(null);
 
   const trueInput = useRef(false);
   const falseInput = useRef(false);
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    
-  })
 
   function showCorrectAnswer() {
     toast.success(`Correct for ${correctAnswerPoints} points`, {
@@ -39,9 +32,25 @@ function App() {
     })
   }
 
+  function alertUser() {
+    toast.info("Time to answer!", {
+      position: "top-left",
+      autoClose: (questionTime - 1000),
+      pauseOnHover: false,
+      hideProgressBar: false,
+      theme: "colored"
+    })
+  }
+
   const initialiseQuiz = () => {
+    const node = document.getElementById('display-questions');
+    const root = createRoot(node);
+
     document.getElementById('welcome-display').style.display = "none"
-    fetch('https://opentdb.com/api.php?amount=6&type=boolean').then(
+
+    root.render(<LoadingComponent />);
+
+    fetch('https://opentdb.com/api.php?amount=6&category=9&type=boolean').then(
       response => {
         if (!response.ok){
           throw new Error("Could not fetch quiz questions");
@@ -51,19 +60,16 @@ function App() {
     ).then(
       response => response.json()
     ).then(
-      // checking data for
       data => {
-        console.log(data)
         questions = data.results;
-        console.log(questions);
       }
     ).catch(
       error => {
         console.error(error.message);
       }
     );
-    const node = document.getElementById('display-questions');
-    const root = createRoot(node);
+
+    
 
     let count = 0;
     const showQuestions = setInterval(() => {
@@ -94,51 +100,32 @@ function App() {
         return;
       }
   
-      console.log(Boolean(questions[count].correct_answer));
+      console.log("Correct Answer: " + Boolean(questions[count].correct_answer));
       
       root.render(<Question question={questions[count].question} count={count} />);
       
       console.log("True Radio Input: " + trueInput.current);
       console.log("False Radio Input: " + falseInput.current);
 
-      toast.info("Time to answer!", {
-        position: "top-left",
-        autoClose: (questionTime - 1000),
-        pauseOnHover: false,
-        hideProgressBar: false,
-        theme: "colored"
-      })
+      alertUser();
+
       count++;
-      console.log(score);
+      console.log("Score: " + score);
     }, questionTime);
   };
 
   function resetOptions() {
     var choices = document.getElementsByName("choice");
-    for (var i = 0; i<choices.length; i++)
-        choices[i].checked = false;
-    
+    for (var i = 0; i < choices.length; i++)
+      choices[i].checked = false;
   }
 
-  const resetQuiz = () => {
-    document.getElementById('welcome-display').style.display = "block";
-    setQuestions([]);
-  };
-
-  function Question(props){
-    // Using a ref to keep track of answers
-    
-    const handleQuestionSubmit = () => {
-      console.log("Question Answered");
-    };
-
+  function Question(props){  
     const handleTrueInputChange = (e) => {
-      console.log(e.target.checked);
       trueInput.current = e.target.checked;
     }
 
-    const handleFalseInputChange = (e) => {
-      console.log(e.target.checked)
+    const handleFalseInputChange = (e) => {      
       falseInput.current = e.target.checked;
     }
 
@@ -151,19 +138,25 @@ function App() {
           </h2>
           <div>
             <fieldset>
-              <form id="question-form"> {/*  ref="formRef" */}
-                <legend>Select an Answer: </legend>
-                <input type="radio" id="true" name="choice" value={true} onChange={handleTrueInputChange} /> {/* ref={trueInputRef} */}
-                <label htmlFor="true">
-                  True
-                </label>
-
-                <input type="radio" id="false" name="choice" value={false}  onChange={handleFalseInputChange} /> {/* ref={falseInputRef} */}
-                <label htmlFor="false">
-                  False
-                </label>
+              <form id="question-form"> 
+                {/* <legend>Select an Answer:</legend> */}
+                <div className="question-options">
+                  <div>
+                    <input type="radio" id="true" name="choice" value={true} onChange={handleTrueInputChange} />
+                    <label htmlFor="true">
+                      True
+                    </label>
+                  </div>
+                  
+                  <div>
+                    <input type="radio" id="false" name="choice" value={false}  onChange={handleFalseInputChange} />
+                    <label htmlFor="false">
+                      False
+                    </label>
+                  </div>                  
+                </div>
                 <br />
-                <input onSubmit={handleQuestionSubmit} type="submit" value={props.count + 1 < questions.length ? "Next Question" : "Finish Quiz"} />
+                {/* <input type="submit" value={props.count + 1 < questions.length ? "Next Question" : "Finish Quiz"} /> */}
               </form>
             </fieldset>            
           </div>
@@ -172,14 +165,31 @@ function App() {
     )
   }
 
+  function LoadingComponent() {
+    return (
+      <div class="loader"></div> 
+    );
+  }
+
+  function reloadPage() {
+    window.location.reload()
+  }
+
   function Results(props){
     return(
       <>
         <div>
-          Here are the results:
+          <h3 id="result-present">
+            Here are the results:
+          </h3>
           <br />
-          {"You scored " + props.score + " out of "+ (questions.length*correctAnswerPoints)}
+          <h2 id="results-text">
+            {"You scored " + props.score + " out of "+ (questions.length*correctAnswerPoints) + " points"}
+          </h2>          
           <br />
+          <button id="return-button" onClick={reloadPage}>
+              Go Back to Home Page ←
+          </button>
         </div>
       </>
     )
@@ -187,15 +197,15 @@ function App() {
 
   return (
     <>
+      <a className="fixed flex items-center justify-center z-[1000] right-4 top-4" href="https://github.com/Kirk-kud/learning_react/tree/master/quiz-app" target="_blank" rel="nostopper noopener" >
+        <img className="w-8 h-8" src="https://img.icons8.com/ios_filled/512/github.png" />
+      </a>
       <div id="welcome-display">
         <h1>
           Welcome to the Quiz App
         </h1>
-        <h3>
-          Take a quick quiz
-        </h3>
         <button onClick={initialiseQuiz}>
-          Take Quiz
+          Take a Quiz
         </button>
       </div>
       <div id="display-questions">

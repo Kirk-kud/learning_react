@@ -152,7 +152,7 @@ function App() {
       <ToastContainer />
       <div>
         <a id="github" href="https://github.com/Kirk-kud/learning_react/tree/master/audio-app" target="_blank" rel="nostopper noopener">
-          <img src="https://img.icons8.com/ios_filled/512/github.png"/>
+          <img src="https://img.icons8.com/ios_filled/512/github.png" />
         </a>
         <h1>
           Welcome to the Audio Looper
