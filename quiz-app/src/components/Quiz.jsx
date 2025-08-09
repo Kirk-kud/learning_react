@@ -42,11 +42,13 @@ function Quiz() {
             }
         );
 
-        let count = 0;
+        let count = 0; 
         const showQuestions = setInterval(() => {
+            console.log(questions);
             toast.dismiss();
             if (count > 0){
-                var correctAnswer = Boolean((questions)[count - 1].correct_answer);
+                var correctAnswer = ((questions)[count - 1].correct_answer);
+                correctAnswer = correctAnswer == "False" ? false : true;
                 console.log("Correct Answer: " + correctAnswer);
                 console.log("True Input: " + trueInput.current);
                 console.log("False Input: " + falseInput.current);
