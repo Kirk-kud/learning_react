@@ -49,13 +49,9 @@ function Quiz() {
                 var correctAnswer = ((questions)[count - 1].correct_answer);
                 correctAnswer = correctAnswer.toLowerCase() == "false" ? false : true;
 
-                // console.log("Correct Answer: " + correctAnswer);
-                // console.log("True Input: " + trueInput.current);
-                // console.log("False Input: " + falseInput.current);
-
                 if ((correctAnswer && trueInput.current) || (!correctAnswer && falseInput.current)){
                     score += correctAnswerPoints;
-                    showCorrectAnswer();
+                    showCorrectAnswer(correctAnswerPoints);
                 }
                 else {
                     showWrongAnswer();
@@ -66,25 +62,18 @@ function Quiz() {
             }
 
             resetOptions();
-            // console.log("Options have been reset");
 
             if (!questions[count]){
                 clearInterval(showQuestions);
                 root.render(<Results score={score} length={questions.length} correctAnswerPoints={correctAnswerPoints}/>);
                 return;
             }
-        
-            // console.log("Correct Answer: " + Boolean(questions[count].correct_answer));
             
             root.render(<Question question={(questions)[count].question} count={count} trueInput={trueInput} falseInput={falseInput} />);
-            
-            // console.log("True Radio Input: " + trueInput.current);
-            // console.log("False Radio Input: " + falseInput.current);
 
-            alertUser();
+            alertUser(questionTime);
 
             count++;
-            // console.log("Score: " + score);
         }, questionTime);
     };
 

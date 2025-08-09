@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 
-export function showCorrectAnswer() {
-    toast.success(`Correct for 5 points`, { // remember to configure this to use ${correctAnswerPoints}
+export function showCorrectAnswer(correctAnswerPoints) {
+    toast.success(`Correct for ${correctAnswerPoints} points`, {
         position: "top-right",
         autoClose: 1000,
         pauseOnHover: false,
@@ -20,10 +20,10 @@ export function showWrongAnswer() {
     })
 }
 
-export function alertUser() {
+export function alertUser(questionTime) {
     toast.info("Time to answer!", {
         position: "top-left",
-        autoClose: (5000 - 1000), // remember to configure this to use the questionTime for responsiveness and dynamism
+        autoClose: (questionTime - 1000),
         pauseOnHover: false,
         hideProgressBar: false,
         theme: "colored"
