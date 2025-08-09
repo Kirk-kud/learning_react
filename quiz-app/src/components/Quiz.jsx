@@ -44,14 +44,14 @@ function Quiz() {
 
         let count = 0; 
         const showQuestions = setInterval(() => {
-            console.log(questions);
             toast.dismiss();
             if (count > 0){
                 var correctAnswer = ((questions)[count - 1].correct_answer);
-                correctAnswer = correctAnswer == "False" ? false : true;
-                console.log("Correct Answer: " + correctAnswer);
-                console.log("True Input: " + trueInput.current);
-                console.log("False Input: " + falseInput.current);
+                correctAnswer = correctAnswer.toLowerCase() == "false" ? false : true;
+
+                // console.log("Correct Answer: " + correctAnswer);
+                // console.log("True Input: " + trueInput.current);
+                // console.log("False Input: " + falseInput.current);
 
                 if ((correctAnswer && trueInput.current) || (!correctAnswer && falseInput.current)){
                     score += correctAnswerPoints;
@@ -66,7 +66,7 @@ function Quiz() {
             }
 
             resetOptions();
-            console.log("Options have been reset");
+            // console.log("Options have been reset");
 
             if (!questions[count]){
                 clearInterval(showQuestions);
@@ -74,17 +74,17 @@ function Quiz() {
                 return;
             }
         
-            console.log("Correct Answer: " + Boolean(questions[count].correct_answer));
+            // console.log("Correct Answer: " + Boolean(questions[count].correct_answer));
             
             root.render(<Question question={(questions)[count].question} count={count} trueInput={trueInput} falseInput={falseInput} />);
             
-            console.log("True Radio Input: " + trueInput.current);
-            console.log("False Radio Input: " + falseInput.current);
+            // console.log("True Radio Input: " + trueInput.current);
+            // console.log("False Radio Input: " + falseInput.current);
 
             alertUser();
 
             count++;
-            console.log("Score: " + score);
+            // console.log("Score: " + score);
         }, questionTime);
     };
 
