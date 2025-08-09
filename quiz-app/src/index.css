@@ -7,12 +7,23 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --background-color: rgba(255, 255, 255, 0.87);
+  --text-color: black;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme='dark'] {
+  --background-color: #242424;
+  --text-color: rgba(255, 255, 255, 0.87);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 a {
