@@ -14,7 +14,7 @@ function Results(props){
             {"You scored " + props.score + " out of "+ (props.length * props.correctAnswerPoints) + " points"}
           </h2>         
           <br />
-          <button id="return-button" onClick={reloadPage}>
+          <button className="return-button" onClick={reloadPage}>
               Go Back to Home Page ←
           </button>
         </div>

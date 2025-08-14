@@ -1,10 +1,11 @@
 import { createRoot } from 'react-dom/client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Results from './Results'
 import Question from './Question'
 import LoadingComponent from './LoadingComponent'
 import { showCorrectAnswer, showWrongAnswer, alertUser } from '../utils/toastFunctions';
+import { DarkModeContext } from '../context/DarkModeContext';
 
 function Quiz() {
     const correctAnswerPoints = 5;
@@ -14,6 +15,36 @@ function Quiz() {
 
     const trueInput = useRef(false);
     const falseInput = useRef(false);
+
+    const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+
+    function handleSwitch() {
+        toggleDarkMode();
+        if (darkMode){
+            document.body.setAttribute('data-theme', "dark");
+        }
+        else {
+            document.body.setAttribute('data-theme', "light");
+        }
+    };
+
+    // Setting the dark mode automatically if the user prefers it as soon as the app renders
+    useEffect(() => {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches){
+            document.getElementById("theme-switch").checked = true;
+            console.log(1);
+            if (!darkMode){
+                toggleDarkMode();
+            }   
+        }
+        // Checking if the user if using light theme on their device
+        else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+            document.getElementById("theme-switch").checked = false;
+            if (darkMode){
+                toggleDarkMode();
+            }
+        }
+    }, []);
 
     function initialiseQuiz() {
         const node = document.getElementById('display-questions');
@@ -79,24 +110,37 @@ function Quiz() {
 
   function resetOptions() {
     var choices = document.getElementsByName("choice");
-    for (var i = 0; i < choices.length; i++)
-      choices[i].checked = false;
+    for (var i = 0; i < choices.length; i++){
+        choices[i].checked = false;
+    }     
   }
+
+  // for dark mode: https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/github-white-icon.png
+  // for light mode: https://img.icons8.com/ios_filled/512/github.png
 
   return (
     <>
-      <a className="fixed flex items-center justify-center z-[1000] right-4 top-4" href="https://github.com/Kirk-kud/learning_react/tree/master/quiz-app" target="_blank" rel="nostopper noopener" >
-        <img className="w-8 h-8" src="https://img.icons8.com/ios_filled/512/github.png" />
-      </a>
-      <div id="welcome-display">
-        <h1>
-          Welcome to the Quiz App
-        </h1>
-        <button onClick={initialiseQuiz}>
-          Take a Quiz
-        </button>
-      </div>
-      <div id="display-questions"></div>     
+      <div>
+        <a className="fixed flex items-center justify-center z-[1000] right-4 top-4" href="https://github.com/Kirk-kud/learning_react/tree/master/quiz-app" target="_blank" rel="nostopper noopener" >
+            <img className="w-8 h-8" src={darkMode ? "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/github-white-icon.png" : "https://img.icons8.com/ios_filled/512/github.png"}/> 
+        </a>
+        <div id="welcome-display">
+          <h1>
+           Welcome to the Quiz App
+          </h1>
+          <button onClick={initialiseQuiz}>
+            Take a Quiz
+          </button>
+          <br />  
+          <p className="mb-[0.2rem]">Dark Mode?</p>    
+          <label className="switch">
+            <input id="theme-switch" type="checkbox" onChange={handleSwitch}/>
+            <span className="slider"></span>
+            {console.log(darkMode)}
+          </label>
+        </div>
+        <div id="display-questions"></div> 
+      </div>          
     </>
   )
 }
