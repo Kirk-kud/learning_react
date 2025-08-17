@@ -20,7 +20,7 @@ function Quiz() {
 
     function handleSwitch() {
         toggleDarkMode();
-        if (darkMode){
+        if (!darkMode){
             document.body.setAttribute('data-theme', "dark");
         }
         else {
@@ -32,10 +32,10 @@ function Quiz() {
     useEffect(() => {
         if (window.matchMedia('(prefers-color-scheme: dark)').matches){
             document.getElementById("theme-switch").checked = true;
-            console.log(1);
             if (!darkMode){
                 toggleDarkMode();
-            }   
+            }
+            document.body.setAttribute("data-theme", "dark");   
         }
         // Checking if the user if using light theme on their device
         else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
@@ -43,6 +43,7 @@ function Quiz() {
             if (darkMode){
                 toggleDarkMode();
             }
+            document.body.setAttribute("data-theme", "light");
         }
     }, []);
 
@@ -115,14 +116,12 @@ function Quiz() {
     }     
   }
 
-  // for dark mode: https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/github-white-icon.png
-  // for light mode: https://img.icons8.com/ios_filled/512/github.png
 
   return (
     <>
       <div>
         <a className="fixed flex items-center justify-center z-[1000] right-4 top-4" href="https://github.com/Kirk-kud/learning_react/tree/master/quiz-app" target="_blank" rel="nostopper noopener" >
-            <img className="w-8 h-8" src={darkMode ? "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/github-white-icon.png" : "https://img.icons8.com/ios_filled/512/github.png"}/> 
+            <img className="w-8 h-8" src={darkMode ? "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/github-white-icon.png" : "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"}/> 
         </a>
         <div id="welcome-display">
           <h1>
@@ -136,7 +135,6 @@ function Quiz() {
           <label className="switch">
             <input id="theme-switch" type="checkbox" onChange={handleSwitch}/>
             <span className="slider"></span>
-            {console.log(darkMode)}
           </label>
         </div>
         <div id="display-questions"></div> 
