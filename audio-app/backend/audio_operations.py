@@ -51,4 +51,4 @@ def get_file_name(file_path):
 
 def get_file_type():
     # dummy value
-    return "m4a"
+    return "mp3"
