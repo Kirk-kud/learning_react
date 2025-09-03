@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import RecipeProfile from './RecipeProfile';
 
 function RecipeList(props) {
-    const [ selectedRecipe, setSelectedRecipe ] = useState(null);
+    const selectedRecipe = useRef([]);
 
-   
+    const secondNode = document.getElementById('root');
+    const secondRoot = createRoot(secondNode);
 
     const handleRecipeClick = (recipe) => {
-        setSelectedRecipe(recipe);
+        selectedRecipe.current = recipe;
+        secondRoot.render(<RecipeProfile recipe={selectedRecipe}/>);
     };
     
     return (
@@ -19,7 +21,7 @@ function RecipeList(props) {
                         key={recipeItem.strMeal} 
                         className={`p-3 rounded-md cursor-pointer transition-colors duration-200 
                         ${selectedRecipe === recipeItem ? 'bg-blue-500 text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
-                        onClick={() => handleOptionClick(recipe)}
+                        onClick={() => handleRecipeClick(recipeItem)}
                     >
                         {recipeItem.strMeal}
                         {console.log(recipeItem.strMeal)}

@@ -18,3 +18,33 @@
   height: 1rem;
   
 }
+
+table, th, th, td {
+  padding: 1px;
+}
+
+#recipe-image {
+  width: 20rem;
+  height: 20rem;
+  
+}
+
+.sub-header {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
+
+.instruction-content {
+  border-left: 1px solid black;
+  margin-left: 1rem;
+  text-align: left;
+}

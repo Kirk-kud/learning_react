@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import RecipeList from './RecipeList';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 function Home() {
     let [ recipes, setRecipes ] = useState([]);
@@ -10,27 +10,26 @@ function Home() {
         const text = document.getElementById('recipe-name').value;
 
         // document.getElementById('welcome-display').style.display = 'none';
-        
         const node = document.getElementById('recipe-display');
         const root = createRoot(node);
 
         // Getting the recipes from the API
+        
         fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${text}`).then(
             response => response.json()
         ).then(
             response => {
                 recipes = response.meals;
                 console.log(response.meals); 
-                
             }
         ).catch(
             error => {
                 console.error("An error occurred: " + error);
             }
         )
+
         console.log(recipes)
         root.render(<RecipeList list={recipes} />)
-
     }
 
     return (
@@ -55,6 +54,7 @@ function Home() {
                 </button>
             </div>
          </div>
+         <div id="root"></div>
          <div id="recipe-display"></div>
         </>
     );
