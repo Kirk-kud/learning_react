@@ -1,25 +1,41 @@
 import { createRoot } from 'react-dom/client';
 import RecipeList from './RecipeList';
+import NoRecipes from './utils/NoRecipes';
 import { useState, useEffect, useRef } from 'react';
 
 function Home() {
     let [ recipes, setRecipes ] = useState([]);
-    const darkMode = true; // Dummy value which will be replaced by a context value
+    const darkMode = false; // Dummy value which will be replaced by a context value
 
-    function handleSubmit() {
+    function handleEnterKey (e) {
+        if (e.key == 'Enter' || e.keyCode === 13){
+            e.preventDefault();
+            document.getElementById('submit-button').click();
+        }
+    };
+
+    async function handleSubmit() {
+        recipes = [];
         const text = document.getElementById('recipe-name').value;
 
-        // document.getElementById('welcome-display').style.display = 'none';
+        if (text.trim().length == 0){
+            console.error("No input entered");
+            return;
+        }
+
+        document.getElementById('welcome-display').style.display = 'none';
         const node = document.getElementById('recipe-display');
         const root = createRoot(node);
 
         // Getting the recipes from the API
         
-        fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${text}`).then(
+        await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${text}`).then(
             response => response.json()
         ).then(
             response => {
-                recipes = response.meals;
+                if (response.meals){
+                    recipes =  response.meals;
+                }
                 console.log(response.meals); 
             }
         ).catch(
@@ -29,8 +45,15 @@ function Home() {
         )
 
         console.log(recipes)
-        root.render(<RecipeList list={recipes} />)
+        if (recipes.length > 0){
+            root.render(<RecipeList list={recipes} />);
+        }
+        else {
+            root.render(<NoRecipes />);
+        }
     }
+
+    // 
 
     return (
         <>
@@ -48,8 +71,8 @@ function Home() {
                 <div>
 
                 </div>
-                <input id="recipe-name" className="w-72 h-10 rounded-full border border-black-300 p-2" type="text" />
-                <button className="search-button" onClick={handleSubmit}>
+                <input id="recipe-name" className="w-72 h-10 rounded-full border border-black-300 p-2" type="text" onKeyDown={handleEnterKey}/>
+                <button id="submit-button" className="search-button" onClick={handleSubmit}>
                     Search
                 </button>
             </div>

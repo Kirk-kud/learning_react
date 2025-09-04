@@ -20,13 +20,15 @@
 }
 
 table, th, th, td {
-  padding: 1px;
+  padding: 0.3rem;
+  width: 20rem;
 }
 
 #recipe-image {
-  width: 20rem;
-  height: 20rem;
-  
+  width: 15rem;
+  height: 15rem;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .sub-header {
@@ -44,7 +46,12 @@ table, th, th, td {
 }
 
 .instruction-content {
-  border-left: 1px solid black;
-  margin-left: 1rem;
+  border-left: 0px solid black;
+  margin-left: 6rem;
   text-align: left;
+}
+
+#recipe-resources {
+  display: flex;
+  justify-content: space-evenly;
 }
