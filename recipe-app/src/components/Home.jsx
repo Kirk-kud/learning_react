@@ -5,6 +5,8 @@ import { useState, useEffect, useRef } from 'react';
 
 function Home() {
     let [ recipes, setRecipes ] = useState([]);
+    const [ isRootInitialised, setIsRootInitialised ] = useState(false);
+
     const darkMode = false; // Dummy value which will be replaced by a context value
 
     function handleEnterKey (e) {
@@ -25,8 +27,14 @@ function Home() {
 
         document.getElementById('welcome-display').style.display = 'none';
         const node = document.getElementById('recipe-display');
-        const root = createRoot(node);
 
+        let root; 
+        console.log("Root before: " + root);
+        if (!isRootInitialised) {
+            root = createRoot(node);
+            setIsRootInitialised(true);
+        }
+        console.log("Roof after: " + root)
         // Getting the recipes from the API
         
         await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${text}`).then(
@@ -36,7 +44,7 @@ function Home() {
                 if (response.meals){
                     recipes =  response.meals;
                 }
-                console.log(response.meals); 
+                // console.log(response.meals); 
             }
         ).catch(
             error => {
@@ -44,7 +52,7 @@ function Home() {
             }
         )
 
-        console.log(recipes)
+        // console.log(recipes)
         if (recipes.length > 0){
             root.render(<RecipeList list={recipes} />);
         }

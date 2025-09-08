@@ -31,12 +31,13 @@ function RecipeProfile(props) {
 
     function returnToRecipeList() {
         const returnNode = document.getElementById('root');
+        let returnRoot;
+
         if (!isRootInitialised){
-            var returnRoot = createRoot(returnNode);
+            returnRoot = createRoot(returnNode);
             setIsRootInitialised(true);
         }
-     
-        returnRoot.render(<RecipeList list={props.recipes} />)        
+        returnRoot.render(<RecipeList list={props.recipes}/>);
     };
 
     const ingredientsList = getIngredients();

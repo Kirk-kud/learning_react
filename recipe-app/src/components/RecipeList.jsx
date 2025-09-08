@@ -4,11 +4,21 @@ import RecipeProfile from './RecipeProfile';
 
 function RecipeList(props) {
     const selectedRecipe = useRef([]);
+    const [ isRootInitialised, setIsRootInitialised ] = useState(false);
 
-    const secondNode = document.getElementById('root');
-    const secondRoot = createRoot(secondNode);
+    
 
     const handleRecipeClick = (recipe) => {
+        const secondNode = document.getElementById('root');
+        let secondRoot;
+        console.log(secondRoot);
+        console.log(isRootInitialised);
+        if (!isRootInitialised){
+            secondRoot = createRoot(secondNode);
+            setIsRootInitialised(true)
+        }
+        console.log(secondRoot);
+
         selectedRecipe.current = recipe;
         secondRoot.render(<RecipeProfile recipe={selectedRecipe} recipes={props.list}/>);
     };
